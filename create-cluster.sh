@@ -1,13 +1,13 @@
 #!/bin/bash
 
 # Variables
-resourceGroup="acdnd-c4-project"
+resourceGroup="azure-lab-05"
 clusterName="udacity-cluster"
 
 # Install aks cli
 echo "Installing AKS CLI"
 
-sudo az aks install-cli
+#sudo az aks install-cli
 
 echo "AKS CLI installed"
 
@@ -19,6 +19,7 @@ echo "Step 1 - Creating AKS cluster $clusterName"
 az aks create \
 --resource-group $resourceGroup \
 --name $clusterName \
+--location centralus \
 --node-count 1 \
 --enable-addons monitoring \
 --generate-ssh-keys
@@ -27,6 +28,7 @@ az aks create \
 az aks create \
 --resource-group $resourceGroup \
 --name $clusterName \
+--location centralus \
 --node-count 1 \
 --generate-ssh-keys
 
@@ -34,7 +36,7 @@ az aks create \
 # This command will is a substitute for "--enable-addons monitoring" option in the "az aks create"
 # Use the log analytics workspace - Resource ID
 # For Cloud Lab users, go to the existing Log Analytics workspace --> Properties --> Resource ID. Copy it and use in the command below.
-az aks enable-addons -a monitoring -n $clusterName -g $resourceGroup --workspace-resource-id "/subscriptions/6c39f60b-2bb1-4e37-ad64-faaf30beaca4/resourcegroups/cloud-demo-153430/providers/microsoft.operationalinsights/workspaces/loganalytics-153430"
+az aks enable-addons -a monitoring -n $clusterName -g $resourceGroup --workspace-resource-id "/subscriptions/752715f5-df31-4865-845f-8d57d11fdf13/resourceGroups/azure-lab-05/providers/Microsoft.OperationalInsights/workspaces/azure-lab"
 
 echo "AKS cluster created: $clusterName"
 
@@ -52,5 +54,5 @@ echo "Verifying connection to $clusterName"
 kubectl get nodes
 
 # echo "Deploying to AKS cluster"
-# The command below will deploy a standard application to your AKS cluster. 
+# The command below will deploy a standard application to your AKS cluster.
 # kubectl apply -f azure-vote.yaml
